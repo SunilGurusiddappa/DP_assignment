@@ -1,0 +1,26 @@
+---
+title: "plotly"
+author: "Sunil Gurusiddappa"
+date: "November 9, 2016"
+output: html_document
+---
+
+####Create a web page presentation using R Markdown that features a plot created with Plotly. Host your webpage on either GitHub Pages, RPubs, or NeoCities. Your webpage must contain the date that you created the document, and it must contain a plot created with Plotly. We would love to see you show off your creativity! 
+```{r echo=FALSE, warning=FALSE, message=FALSE}
+source("yahoo.r")
+AAPL<-GetYahooData("AAPL")
+IBM<-GetYahooData("IBM")
+
+
+library(plotly)
+
+mat<-data.frame(Date=AAPL$Date,AAPL=round(AAPL$Adj.Close,2),IBM=round(IBM$Adj.Close,2) )
+
+p <- mat %>% 
+  plot_ly(x = AAPL$Date, y = AAPL, fill = "tozeroy", name = "Microsoft") %>% 
+  add_trace(y = IBM, fill = "tonexty", name = "IBM") %>% 
+  layout(title = "Stock Prices", 
+         xaxis = list(title = "Time"),
+         yaxis = list(title = "Stock Prices"))
+p  # Thats it !
+```
